@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Photos from "./Components/Photos/Photos";
+import CompareTable from "./Components/CompareTable/CompareTable";
+import Navbar from "./Components/Navbar/Navbar";
+import { connect } from "react-redux";
+import { useEffect } from "react";
+import { fetchDataResponse } from "./Store/actions/Actions";
 
-function App() {
+function App(props) {
+  useEffect(() => {
+    props.fetchingPhotos();
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className='App'>
+        <Switch>
+          <Route path='/comparison'>
+            <Navbar />
+            <CompareTable />
+          </Route>
+          <Route path='/'>
+            <Navbar />
+            <Photos />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
-export default App;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchingPhotos: () => dispatch(fetchDataResponse()),
+    // comparingData: (data) => dispatch(AddingData(data)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(App);

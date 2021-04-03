@@ -1,0 +1,10 @@
+.Navbar {
+  padding: 15px;
+}
+
+.Navbar {
+  display: flex;
+  justify-content: space-evenly;
+  border-bottom: 1px solid black;
+  font-weight: bold;
+}
